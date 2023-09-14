@@ -18,12 +18,12 @@ class ItemsViewModel: ViewModel() {
 
     var isLoading by mutableStateOf(false)
         private set
+//
+//    init {
+//        fetchData()
+//    }
 
-    init {
-        fetchData()
-    }
-
-    private fun fetchData() {
+    fun fetchData() {
         viewModelScope.launch {
             try {
                 isLoading = true
