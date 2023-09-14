@@ -50,7 +50,7 @@ fun Content(viewModel: MainViewModel) {
     {
         BtnColor()
         Text(text = viewModel.resultState)
-        Button(onClick = { viewModel.blockApp() }) {
+        Button(onClick = { viewModel.fetchData() }) {
             Text(text = "Call API")
         }
     }
