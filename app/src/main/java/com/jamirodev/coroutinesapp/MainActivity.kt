@@ -17,6 +17,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -80,6 +81,9 @@ fun BtnColor() {
 @Composable
 fun ItemsView(viewModel: ItemsViewModel) {
     val itemsList = viewModel.itemList
+    val list by viewModel.list.collectAsState()
+
+
 
     LaunchedEffect(Unit) {
         viewModel.fetchData()
@@ -90,7 +94,7 @@ fun ItemsView(viewModel: ItemsViewModel) {
             CircularProgressIndicator()
         }else {
             LazyColumn{
-                items(itemsList) { item ->
+                items(list) { item ->
                     Text(text = item.name)
                 }
             }
