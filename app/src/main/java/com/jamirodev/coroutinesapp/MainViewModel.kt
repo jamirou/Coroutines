@@ -15,12 +15,16 @@ class MainViewModel: ViewModel() {
 
     fun fetchData() {
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                delay(5000)
-                "Api response"
-            }
-            resultState = result
+            apiCall()
         }
+    }
+
+    private suspend fun apiCall() {
+        val result = withContext(Dispatchers.IO) {
+            delay(5000)
+            "Api response"
+        }
+        resultState = result
     }
 
 
