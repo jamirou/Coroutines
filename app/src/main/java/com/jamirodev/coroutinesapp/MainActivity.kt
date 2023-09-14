@@ -7,6 +7,8 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -27,7 +29,7 @@ import com.jamirodev.coroutinesapp.ui.theme.CoroutinesAppTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel: MainViewModel by viewModels()
+        val viewModel: ItemsViewModel by viewModels()
         setContent {
             CoroutinesAppTheme {
                 // A surface container using the 'background' color from the theme
@@ -35,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Content(viewModel)
+                    ItemsView(viewModel)
                 }
             }
         }
@@ -72,5 +74,21 @@ fun BtnColor() {
     )) {
         Text(text = "Change color")
     }
-    
 }
+
+@Composable
+fun ItemsView(viewModel: ItemsViewModel) {
+    val itemsList = viewModel.itemList
+    Column {
+        if (viewModel.isLoading) {
+            CircularProgressIndicator()
+        }else {
+            LazyColumn{
+                items(itemsList) { item ->
+                    Text(text = item.name)
+                }
+            }
+        }
+    }
+}
+
