@@ -17,4 +17,19 @@ bloqueando la app de forma intencional y asi analizar el uso de las __corutinas_
         resultState = result
     }
   ```
-  *al utilizar ```val result = withContext(Dispatchers.IO) ``` el llamado de la api se ejecuta en el hilo .IO el cual ahora evita el crasheo de la app. 
+  *al utilizar ```val result = withContext(Dispatchers.IO) ``` el llamado de la api se ejecuta en el hilo .IO el cual ahora evita el crasheo de la app.
+  *Para manejar los errores hago uso de un try-catch de la siguiente manera: 
+  ```     fun fetchData() {
+        viewModelScope.launch {
+            try {
+                isLoading = true
+                apiCall()
+            }catch (e:Exception) {
+                println("Error ${e.message}")
+            } finally {
+                isLoading = false
+            }
+        }
+    }
+  ```
+  
