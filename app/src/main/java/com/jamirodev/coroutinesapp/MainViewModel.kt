@@ -9,13 +9,25 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class MainViewModel: ViewModel() {
     var resultState by mutableStateOf("")
+        private set
+
+    var isLoading by mutableStateOf(false)
+        private set
 
     fun fetchData() {
         viewModelScope.launch {
-            apiCall()
+            try {
+                isLoading = true
+                apiCall()
+            }catch (e:Exception) {
+                println("Error ${e.message}")
+            } finally {
+                isLoading = false
+            }
         }
     }
 
